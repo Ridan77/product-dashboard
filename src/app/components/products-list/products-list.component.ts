@@ -1,63 +1,96 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService, ProductQuery } from '../../services/product.service';
-import { Product } from '../../models/product.model';
-import { finalize } from 'rxjs';
-import { NgForOf, NgIf } from '@angular/common';
+import { Component, DestroyRef, OnInit } from '@angular/core'
+import {
+  ProductService,
+  ProductQuery,
+  ProductsResponse,
+} from '../../services/product.service'
+import { Product } from '../../models/product.model'
+import { NgForOf, NgIf } from '@angular/common'
+import { FormControl, ReactiveFormsModule } from '@angular/forms'
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NgIf, NgForOf],
+  imports: [NgIf, NgForOf, ReactiveFormsModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
-export class ProductsListComponent {
-  constructor(private productService: ProductService) {}
+export class ProductsListComponent implements OnInit {
+  constructor(
+    private productService: ProductService,
+    private destroyRef: DestroyRef
+  ) {}
   ngOnInit(): void {
-    this.loadProducts();
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(700), //  wait 700ms
+        distinctUntilChanged(), //  ignore same value
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((value) => {
+        this.query.search = value ?? ''
+        this.query.page = 1
+        this.loadProducts()
+      })
+
+    this.loadProducts()
   }
 
   loadProducts(): void {
-    this.loading = true;
-    this.error = null;
+    this.loading = true
+    this.error = null
 
     this.productService
       .getProducts(this.query)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (products) => (this.products = products),
+        next: (res) => {
+          ;(this.products = res.items),
+            (this.totalCount = res.totalCount),
+            console.log(this.products),
+            (this.hasNext =
+              this.query.page! * this.query.limit! < this.totalCount)
+        },
         error: () => (this.error = 'Failed to load products'),
-      });
+      })
   }
 
-  products: Product[] = [];
-  loading = false;
-  error: string | null = null;
+  searchControl = new FormControl('')
+  products: Product[] = []
+  totalCount: number = 0
+  loading = false
+  error: string | null = null
+
   query: ProductQuery = {
     search: '',
     sortBy: 'createdAt',
     order: 'desc',
     page: 1,
-    limit: 10,
-  };
-  onSearch(value: string): void {
-    this.query.search = value;
-    this.query.page = 1;
-    this.loadProducts();
+    limit: 4,
   }
+  hasNext = false
+
   onSortChange(sortBy: ProductQuery['sortBy']): void {
-    this.query.sortBy = sortBy;
-    this.loadProducts();
+    this.query.sortBy = sortBy
+    this.query.page = 1
+    this.loadProducts()
   }
   nextPage(): void {
-    this.query.page!++;
-    this.loadProducts();
+    this.query.page!++
+    this.loadProducts()
   }
 
   prevPage(): void {
     if (this.query.page! > 1) {
-      this.query.page!--;
-      this.loadProducts();
+      this.query.page!--
+      this.loadProducts()
     }
   }
+
+  get totalPages(): number {
+  return Math.ceil(this.totalCount / (this.query.limit ?? 1))
+}
+
 }
