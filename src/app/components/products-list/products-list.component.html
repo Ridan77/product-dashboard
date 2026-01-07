@@ -1,2 +1,38 @@
 <h1>Products</h1>
-<p>Products list page</p>
+
+<!-- Loading -->
+<p *ngIf="loading">Loading products...</p>
+
+<!-- Error -->
+<p *ngIf="error" class="error">{{ error }}</p>
+
+<!-- Empty -->
+<p *ngIf="!loading && !error && products.length === 0">
+    No products found.
+</p>
+
+<!-- List -->
+<input type="text" placeholder="Search products..." [value]="query.search"
+    (input)="onSearch($any($event.target).value)" />
+<select [value]="query.sortBy" (change)="onSortChange($any($event.target).value)">
+    <option value="createdAt">Newest</option>
+    <option value="price">Price</option>
+    <option value="name">Name</option>
+</select>
+<ul *ngIf="!loading && !error && products.length > 0">
+
+    <li *ngFor="let product of products">
+        <strong>{{ product.name }}</strong>
+        — {{ product.price }} {{ product.currency }}
+        ({{ product.category }})
+    </li>
+   
+
+</ul>
+ <div class="pagination">
+        <button (click)="prevPage()" [disabled]="query.page === 1">
+            Previous
+        </button>
+        <span>Page {{ query.page }}</span>
+        <button (click)="nextPage()">Next</button>
+    </div>
