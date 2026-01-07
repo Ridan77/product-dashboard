@@ -1,2 +1,59 @@
-<h1>Product</h1>
-<p>Create / Edit product page</p>
+<h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
+
+<p *ngIf="error" class="error">{{ error }}</p>
+<!-- Product image (edit mode only) -->
+<div *ngIf="isEditMode && !loading" class="image-preview">
+  <img
+    class="product-image"
+    [src]="getImageUrl(form.get('name')?.value)"
+    [alt]="form.get('name')?.value"
+  />
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+        Name
+        <input formControlName="name" />
+    </label>
+    <p *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+        Name is required (min 3 chars)
+    </p>
+
+    <label>
+        Description
+        <textarea formControlName="description"></textarea>
+    </label>
+
+    <label>
+        Price
+        <input type="number" formControlName="price" />
+    </label>
+
+    <label>
+        Currency
+        <select formControlName="currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="ILS">ILS</option>
+        </select>
+    </label>
+
+    <label>
+        Category
+        <input formControlName="category" />
+    </label>
+
+    <label>
+        Stock
+        <input type="number" formControlName="stock" />
+    </label>
+
+    <label>
+        Active
+        <input type="checkbox" formControlName="isActive" />
+    </label>
+
+    <button type="submit" [disabled]="loading">
+        {{ loading ? 'Saving...' : 'Save' }}
+    </button>
+</form>

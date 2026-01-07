@@ -9,7 +9,9 @@
     --gray-900: oklch(19.37% 0.006 300.98);
     --gray-700: oklch(36.98% 0.014 302.71);
     --gray-400: oklch(70.9% 0.015 304.04);
-
+    --green: rgb(33, 229, 33);
+    --bg-general: rgb(178, 178, 231);
+    --bg-fixed: rgb(15, 154, 201);
     --red-to-pink-to-purple-vertical-gradient: linear-gradient(
       180deg,
       var(--orange-red) 0%,

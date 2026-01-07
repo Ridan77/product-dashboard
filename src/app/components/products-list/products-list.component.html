@@ -1,37 +1,73 @@
-<h1>Products</h1>
+<div class="main-container">
 
-<!-- Loading -->
-<p *ngIf="loading">Loading products...</p>
+    <div class="header">
+        <h1>Products</h1>
 
-<!-- Error -->
-<p *ngIf="error" class="error">{{ error }}</p>
+        <!-- Controls -->
+        <div class="toolbar">
+            <input type="text" placeholder="Search products..." [formControl]="searchControl" />
 
-<!-- Empty -->
-<p *ngIf="!loading && !error && products.length === 0">
-    No products found.
-</p>
+            <label>
+                Sort by:
+                <select [value]="query.sortBy" (change)="onSortChange($any($event.target).value)">
+                    <option value="createdAt">Newest</option>
+                    <option value="price">Price</option>
+                    <option value="name">Name</option>
+                </select>
+            </label>
+        </div>
+    </div>
 
-<!-- List -->
-<input type="text" placeholder="Search products..." [formControl]="searchControl" />
-<select [value]="query.sortBy" (change)="onSortChange($any($event.target).value)">
-    <option value="createdAt">Newest</option>
-    <option value="price">Price</option>
-    <option value="name">Name</option>
-</select>
-<ul *ngIf="!loading && !error && products.length > 0">
+    <!-- Loading -->
+    <p *ngIf="loading">Loading products…</p>
 
-    <li *ngFor="let product of products">
-        <strong>{{ product.name }}</strong>
-        — {{ product.price }} {{ product.currency }}
-        ({{ product.category }})
-    </li>
+    <!-- Error -->
+    <p *ngIf="error" class="error">{{ error }}</p>
+
+    <!-- Empty -->
+    <p *ngIf="!loading && !error && products.length === 0">
+        No products found.
+    </p>
+
+    <!-- Cards -->
+    <div class="content">
+        <div class="products-grid" *ngIf="!loading && !error && products.length > 0">
+            <div class="product-card" *ngFor="let product of products">
+                <div class="card-header">
+                    <h3>{{ product.name }}</h3>
+                    <p class="description">
+                        {{ product.description || 'No description available.' }}
+                    </p>
+                </div>
+                <!-- Image -->
+                <img class="product-image" [src]="getImageUrl(product.name)" [alt]="product.name" />
 
 
-</ul>
-<div class="pagination">
-    <button (click)="prevPage()" [disabled]="query.page === 1">
-        Previous
-    </button>
-    <span>Page {{ query.page }} / {{totalPages}}</span>
-    <button (click)="nextPage()" [disabled]="!hasNext">Next</button>
+                <div class="card-content">
+                    <span class="price">
+                        {{ product.price }} {{ product.currency }}
+                    </span>
+
+                    <p class="category">{{ product.category }}</p>
+                </div>
+
+                <div class="card-actions">
+                    <button (click)="editProduct(product.id)">Edit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="!loading && !error">
+        <button (click)="prevPage()" [disabled]="query.page === 1">
+            Previous
+        </button>
+
+        <span>Page {{ query.page }} / {{ totalPages }}</span>
+
+        <button (click)="nextPage()" [disabled]="!hasNext">
+            Next
+        </button>
+    </div>
 </div>

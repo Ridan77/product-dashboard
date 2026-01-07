@@ -9,6 +9,7 @@ import { NgForOf, NgIf } from '@angular/common'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-products-list',
@@ -20,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 export class ProductsListComponent implements OnInit {
   constructor(
     private productService: ProductService,
+    private router: Router,
     private destroyRef: DestroyRef
   ) {}
   ngOnInit(): void {
@@ -90,7 +92,15 @@ export class ProductsListComponent implements OnInit {
   }
 
   get totalPages(): number {
-  return Math.ceil(this.totalCount / (this.query.limit ?? 1))
-}
+    return Math.ceil(this.totalCount / (this.query.limit ?? 1))
+  }
+  getImageUrl(name: string): string {
+    return `https://robohash.org/${encodeURIComponent(
+      name
+    )}?set=set1&size=200x200`
+  }
 
+  editProduct(productId: number) {
+    this.router.navigate(['/products', productId])
+  }
 }
