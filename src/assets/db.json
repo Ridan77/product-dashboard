@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Wireless Mouse",
+      "description": "Ergonomic wireless mouse",
+      "price": 29.99,
+      "currency": "USD",
+      "category": "Accessories",
+      "stock": 120,
+      "isActive": true,
+      "createdAt": 1704873600000,
+      "updatedAt": 1704873600000
+    },
+    {
+      "id": 2,
+      "name": "Mechanical Keyboard",
+      "description": "RGB mechanical keyboard",
+      "price": 99.99,
+      "currency": "USD",
+      "category": "Accessories",
+      "stock": 45,
+      "isActive": true,
+      "createdAt": 1705045800000,
+      "updatedAt": 1705045800000
+    }
+  ]
+}
