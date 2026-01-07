@@ -16,6 +16,7 @@ import { Product } from '../../models/product.model'
   standalone: true,
   imports: [ReactiveFormsModule, NgIf],
   templateUrl: './product-form.component.html',
+  styleUrl: './product-form.component.css',
 })
 export class ProductFormComponent implements OnInit {
   form!: FormGroup
@@ -62,6 +63,8 @@ export class ProductFormComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched()
+      console.log('not valid form')
+
       return
     }
 

@@ -179,6 +179,18 @@
       "isActive": false,
       "createdAt": 1706169600000,
       "updatedAt": 1706169600000
+    },
+    {
+      "name": "Tessr",
+      "description": "des",
+      "price": 50,
+      "currency": "ILS",
+      "category": "ss",
+      "stock": 1,
+      "isActive": true,
+      "id": 1767806660431,
+      "createdAt": 1767806660431,
+      "updatedAt": 1767806660431
     }
   ]
 }

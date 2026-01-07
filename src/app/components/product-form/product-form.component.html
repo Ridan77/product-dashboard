@@ -3,11 +3,7 @@
 <p *ngIf="error" class="error">{{ error }}</p>
 <!-- Product image (edit mode only) -->
 <div *ngIf="isEditMode && !loading" class="image-preview">
-  <img
-    class="product-image"
-    [src]="getImageUrl(form.get('name')?.value)"
-    [alt]="form.get('name')?.value"
-  />
+    <img class="product-image" [src]="getImageUrl(form.get('name')?.value)" [alt]="form.get('name')?.value" />
 </div>
 
 <form [formGroup]="form" (ngSubmit)="submit()">
@@ -23,11 +19,17 @@
         Description
         <textarea formControlName="description"></textarea>
     </label>
+    <p *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+        Description is required
+    </p>
 
     <label>
         Price
         <input type="number" formControlName="price" />
     </label>
+    <p *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+        Price is required
+    </p>
 
     <label>
         Currency
@@ -38,6 +40,7 @@
         </select>
     </label>
 
+
     <label>
         Category
         <input formControlName="category" />
@@ -47,13 +50,15 @@
         Stock
         <input type="number" formControlName="stock" />
     </label>
-
+    <p *ngIf="form.get('stock')?.touched && form.get('stock')?.invalid">
+        Stock is required
+    </p>
     <label>
         Active
         <input type="checkbox" formControlName="isActive" />
     </label>
 
-    <button type="submit" [disabled]="loading">
+    <button type="submit" [disabled]="loading || form.invalid">
         {{ loading ? 'Saving...' : 'Save' }}
     </button>
 </form>

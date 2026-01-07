@@ -19,13 +19,13 @@
     </div>
 
     <!-- Loading -->
-    <p *ngIf="loading">Loading products…</p>
+    <p class="msg-or-err" *ngIf="loading">Loading products…</p>
 
     <!-- Error -->
-    <p *ngIf="error" class="error">{{ error }}</p>
+    <p class="msg-or-err" *ngIf="error" class="error">{{ error }}</p>
 
     <!-- Empty -->
-    <p *ngIf="!loading && !error && products.length === 0">
+    <p class="msg-or-err" *ngIf="!loading && !error && products.length === 0">
         No products found.
     </p>
 

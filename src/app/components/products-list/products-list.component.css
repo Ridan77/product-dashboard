@@ -32,9 +32,10 @@
   gap: 20px;
 }
 
-.list-content {
+.list-content ,.msg-or-err {
   padding-top: 150px;
   padding-bottom: 70px;
+  height: 100%;
 }
 
 .products-grid {
@@ -75,4 +76,10 @@
 .description {
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+.msg-or-err{
+text-align: center;
+color: white;
+
 }
