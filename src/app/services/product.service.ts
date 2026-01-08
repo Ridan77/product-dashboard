@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable,map } from 'rxjs'
+import { Observable, map, catchError, throwError } from 'rxjs'
 import { Product } from '../models/product.model'
 
 export interface ProductQuery {
@@ -17,35 +17,44 @@ export interface ProductsResponse {
   totalCount: number
 }
 
+export interface ApiError {
+  message: string
+  status?: number
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private readonly apiUrl = 'http://localhost:3000/products'
 
   constructor(private http: HttpClient) {}
 
-  getProducts(query: ProductQuery): Observable<ProductsResponse> {
+  private buildParams(query: ProductQuery): HttpParams {
+    const page = Math.max(1, query.page ?? 1)
+    const limit = Math.max(1, query.limit ?? 10)
+
     let params = new HttpParams()
+      .set('_start', ((page - 1) * limit).toString())
+      .set('_end', (page * limit).toString())
 
-    // Filtering
-    if (query.search) params = params.set('q', query.search)
-    if (query.category) params = params.set('category', query.category)
+    if (query.search?.trim()) {
+      params = params.set('q', query.search.trim())
+    }
 
-    // Sorting
+    if (query.category) {
+      params = params.set('category', query.category)
+    }
+
     if (query.sortBy) {
       params = params.set('_sort', query.sortBy)
       params = params.set('_order', query.order ?? 'asc')
     }
+    console.log(params);
+    
+    return params
+  }
 
-    // Pagination (OFFSET-BASED — json-server safe)
-    if (query.page !== undefined && query.limit !== undefined) {
-      const start = (query.page - 1) * query.limit
-      const end = start + query.limit
-
-      params = params.set('_start', start.toString())
-      params = params.set('_end', end.toString())
-    }
-    console.log('params', params)
-    // return this.http.get<Product[]>(this.apiUrl, { params })
+  getProducts(query: ProductQuery): Observable<ProductsResponse> {
+    const params = this.buildParams(query)
     return this.http
       .get<Product[]>(this.apiUrl, {
         params,
@@ -55,19 +64,48 @@ export class ProductService {
         map((response) => ({
           items: response.body ?? [],
           totalCount: Number(response.headers.get('X-Total-Count') ?? 0),
-        }))
+        })),
+        catchError((err) => this.mapHttpError(err))
       )
   }
 
   getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    return this.http
+      .get<Product>(`${this.apiUrl}/${id}`)
+      .pipe(catchError((err) => this.mapHttpError(err)))
   }
 
   createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product)
+    return this.http
+      .post<Product>(this.apiUrl, product)
+      .pipe(catchError((err) => this.mapHttpError(err)))
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product)
+    return this.http
+      .put<Product>(`${this.apiUrl}/${product.id}`, product)
+      .pipe(catchError((err) => this.mapHttpError(err)))
+  }
+
+  private mapHttpError(error: unknown): Observable<never> {
+    if (error instanceof HttpErrorResponse) {
+      return throwError(
+        () =>
+          ({
+            message:
+              error.status === 0
+                ? 'Unable to reach server'
+                : error.error?.message || 'Request failed',
+            status: error.status,
+          } satisfies ApiError)
+      )
+    }
+
+    return throwError(
+      () =>
+        ({
+          message: 'Unexpected error occurred',
+        } satisfies ApiError)
+    )
   }
 }

@@ -1,7 +1,7 @@
 .main-container {
   width: 100%;
   height: 100%;
-  background-color: var(--bg-general);
+  /* background-color: var(--bg-general); */
 }
 
 .header,
@@ -10,7 +10,6 @@
   background-color: var(--bg-fixed);
   z-index: 1000;
   padding: 20px;
-  /* padding-bottom: 20px; */
   width: 100%;
   color: white;
 }
@@ -44,9 +43,8 @@
 
 .list-content,
 .msg-or-err {
-  background-color: green;
   padding-top: 170px;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
   height: 100%;
 }
 
@@ -93,6 +91,6 @@
 .msg-or-err {
   margin-top: 100px;
   text-align: center;
-  color: white;
+  /* color: white; */
   font-size: 2em;
 }

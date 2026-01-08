@@ -19,6 +19,19 @@
                 <input matInput placeholder="Search products..." [formControl]="searchControl" />
             </mat-form-field>
 
+            <!-- Category -->
+            <mat-form-field appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select [value]="query.category" (selectionChange)="onCategoryChange($event.value)">
+                    <mat-option value="">All Categories</mat-option>
+                    <mat-option value="Accessories">Accessories</mat-option>
+                    <mat-option value="Monitors">Monitors</mat-option>
+                    <mat-option value="Audio">Audio</mat-option>
+                    <mat-option value="Video">Video</mat-option>
+                    <mat-option value="Storage">Storage</mat-option>
+                    <mat-option value="Charging">Charging</mat-option>
+                </mat-select>
+            </mat-form-field>
             <!-- Sort -->
             <mat-form-field appearance="outline">
                 <mat-label>Sort by</mat-label>

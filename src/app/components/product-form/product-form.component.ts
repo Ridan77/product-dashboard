@@ -74,7 +74,6 @@ export class ProductFormComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched()
-      console.log('not valid form')
 
       return
     }

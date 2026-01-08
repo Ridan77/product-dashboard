@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
 import { MatButtonModule } from '@angular/material/button'
-
+const PAGE_SIZE = 4
 @Component({
   selector: 'app-products-list',
   standalone: true,
@@ -63,7 +63,6 @@ export class ProductsListComponent implements OnInit {
         next: (res) => {
           ;(this.products = res.items),
             (this.totalCount = res.totalCount),
-            console.log(this.products),
             (this.hasNext =
               this.query.page! * this.query.limit! < this.totalCount)
         },
@@ -80,15 +79,26 @@ export class ProductsListComponent implements OnInit {
   query: ProductQuery = {
     search: '',
     sortBy: 'createdAt',
-    order: 'desc',
+    order: 'asc',
     page: 1,
-    limit: 4,
+    limit: PAGE_SIZE,
   }
   hasNext = false
 
   onSortChange(sortBy: ProductQuery['sortBy']): void {
-    this.query.sortBy = sortBy
-    this.query.page = 1
+    this.query = {
+      ...this.query,
+      page: 1,
+      sortBy: sortBy,
+    }
+    this.loadProducts()
+  }
+  onCategoryChange(category: string) {
+    this.query = {
+      ...this.query,
+      category: category || undefined,
+      page: 1,
+    }
     this.loadProducts()
   }
   nextPage(): void {
@@ -104,8 +114,10 @@ export class ProductsListComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalCount / (this.query.limit ?? 1))
+    const limit = this.query.limit ?? PAGE_SIZE
+    return this.totalCount > 0 ? Math.ceil(this.totalCount / limit) : 1
   }
+
   getImageUrl(name: string): string {
     return `https://robohash.org/${encodeURIComponent(
       name

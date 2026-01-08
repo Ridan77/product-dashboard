@@ -94,21 +94,21 @@ export interface Product {
   category: string
   stock: number
   isActive: boolean
-  createdAt: string
-  updatedAt: string
+  createdAt: number
+  updatedAt: number
 }
 ```
 ## API & Data Layer
 
 The application treats data access as an API boundary.
 
-Mock Backend
+# Mock Backend
 
 The project uses json-server with a db.json file.
 
 Supported features:
 
-Pagination via _page / _limit
+Pagination via _start/_end
 
 Sorting via _sort / _order
 
@@ -116,7 +116,7 @@ Search via q
 
 Total count via X-Total-Count response header
 
-ProductService
+# ProductService
 
 Responsible for all HTTP communication
 
@@ -126,7 +126,8 @@ Returns typed observables
 
 Keeps components thin and declarative
 
-Routes
+# Routes
+
 Route	Description
 /products	Products list
 /products/new	Create product
