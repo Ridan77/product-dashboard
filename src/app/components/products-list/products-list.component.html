@@ -3,7 +3,7 @@
     <div class="header">
         <div class="main-header">
 
-            <h1>Products List</h1>
+            <h1>Products Dashboard</h1>
 
             <!-- Create -->
             <button mat-raised-button color="primary" (click)="createProduct()">
@@ -43,7 +43,7 @@
     </div>
 
     <!-- Loading -->
-    <p class="msg-or-err" *ngIf="loading">Loading products…</p>
+    <p class="msg-or-err" *ngIf="loading">Loading products...</p>
 
     <!-- Error -->
     <p class="msg-or-err error" *ngIf="error">{{ error }}</p>
@@ -76,7 +76,9 @@
                 </div>
 
                 <div class="card-actions">
-                    <button (click)="editProduct(product.id)">Edit</button>
+                    <button mat-raised-button color="primary" (click)="editProduct(product.id)">
+                        Edit
+                    </button>
                 </div>
             </div>
         </div>
@@ -84,14 +86,14 @@
     </div>
     <!-- Pagination -->
     <div class="pagination" *ngIf="!loading && !error">
-        <button (click)="prevPage()" [disabled]="query.page === 1">
+
+        <button mat-raised-button  color="primary" (click)="prevPage()" [disabled]="query.page === 1">
             Previous
         </button>
-
         <span>Page {{ query.page }} / {{ totalPages }}</span>
-
-        <button (click)="nextPage()" [disabled]="!hasNext">
+        <button mat-raised-button color="primary" (click)="nextPage()" [disabled]="!hasNext">
             Next
         </button>
+
     </div>
 </div>

@@ -16,7 +16,10 @@
 .header {
   top: 0;
 }
-
+.pagination{
+  display: flex;
+  align-items: center;
+}
 .header .main-header {
   display: flex;
   justify-content: space-around;
@@ -25,7 +28,9 @@
 .header .main-header button {
   background-color: inherit;
 }
-
+.pagination button {
+  background-color: inherit;
+}
 .filters {
   margin: auto;
   display: flex;
@@ -52,11 +57,14 @@
   text-align: center;
   font-size: 2em;
 }
+
 .products-grid {
   width: 100%;
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: auto;
+
   max-width: calc(4 * 250px + 3 * 20px);
   margin-inline: auto;
 }
@@ -65,15 +73,15 @@
   padding: 10px;
   color: var(--green);
   border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
 }
 
 .product-image {
+  margin: auto;
   object-fit: contain;
   border-radius: 4px;
-  margin-bottom: 0.75rem;
 }
 
 .card-content {

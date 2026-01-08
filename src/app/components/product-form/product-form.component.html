@@ -78,7 +78,7 @@
     mat-raised-button
     color="primary"
     type="submit"
-    [disabled]="loading || form.invalid"
+    [disabled]="loading || form.invalid || (isEditMode && !existingProduct)"
   >
     {{ loading ? 'Saving...' : 'Save' }}
   </button>

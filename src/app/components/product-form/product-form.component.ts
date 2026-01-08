@@ -9,7 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { NgIf } from '@angular/common'
 import { ProductService } from '../../services/product.service'
 import { finalize } from 'rxjs'
-import { Product, ProductCreate, ProductUpdate } from '../../models/product.model'
+import {
+  Product,
+  ProductCreate,
+  ProductUpdate,
+  ProductFormValues
+} from '../../models/product.model'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
@@ -44,7 +49,7 @@ export class ProductFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
-  private existingProduct?: Product
+  existingProduct?: Product
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -61,6 +66,7 @@ export class ProductFormComponent implements OnInit {
     if (idParam) {
       this.isEditMode = true
       this.productId = Number(idParam)
+      this.form.disable()
       this.loadProduct(this.productId)
     }
   }
@@ -73,6 +79,7 @@ export class ProductFormComponent implements OnInit {
         next: (product) => {
           this.existingProduct = product
           this.form.patchValue(product)
+          this.form.enable()
         },
         error: () => (this.error = 'Failed to load product'),
       })
@@ -80,27 +87,27 @@ export class ProductFormComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched()
-
       return
     }
     if (this.isEditMode && !this.existingProduct) {
-      this.error = 'Product not loaded'
       return
     }
     this.loading = true
     this.error = null
     const now = Date.now()
+    const formValues = this.form.value as ProductFormValues
+
     const product: ProductCreate | ProductUpdate = this.isEditMode
-      ? {
-          ...this.existingProduct!,
-          ...(this.form.value as Omit<ProductUpdate, 'id' | 'createdAt' | 'updatedAt'>),
-          updatedAt: now,
-        }
-      : {
-          ...(this.form.value as Omit<ProductCreate, 'createdAt' | 'updatedAt'>),
-          createdAt: now,
-          updatedAt: now,
-        }
+     ? {
+      ...this.existingProduct!,
+      ...formValues,
+      updatedAt: now,
+    }
+  : {
+      ...formValues,
+      createdAt: now,
+      updatedAt: now,
+    }
 
     const request$ = this.isEditMode
       ? this.productService.updateProduct(product as ProductUpdate)
