@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
 import { MatButtonModule } from '@angular/material/button'
 const PAGE_SIZE = 4
+
 @Component({
   selector: 'app-products-list',
   standalone: true,
@@ -69,6 +70,14 @@ export class ProductsListComponent implements OnInit {
         error: () => (this.error = 'Failed to load products'),
       })
   }
+  readonly categories = [
+    'Accessories',
+    'Monitors',
+    'Audio',
+    'Video',
+    'Storage',
+    'Charging',
+  ] as const
 
   searchControl = new FormControl('')
   products: Product[] = []

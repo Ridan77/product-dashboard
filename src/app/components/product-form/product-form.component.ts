@@ -16,16 +16,18 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatButtonModule } from '@angular/material/button'
 
-
-
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf,  MatFormFieldModule,
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatButtonModule],
+    MatButtonModule,
+  ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css',
 })
@@ -42,6 +44,7 @@ export class ProductFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+  private existingProduct?: Product
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -49,7 +52,7 @@ export class ProductFormComponent implements OnInit {
       description: ['', [Validators.required]],
       price: [0, [Validators.required, Validators.min(0)]],
       currency: ['USD', Validators.required],
-      category: ['', Validators.required],
+      category: [''],
       stock: [0, [Validators.required, Validators.min(0)]],
       isActive: [true],
     })
@@ -67,7 +70,10 @@ export class ProductFormComponent implements OnInit {
       .getProduct(id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (product) => this.form.patchValue(product),
+        next: (product) => {
+          this.existingProduct = product
+          this.form.patchValue(product)
+        },
         error: () => (this.error = 'Failed to load product'),
       })
   }
@@ -80,13 +86,18 @@ export class ProductFormComponent implements OnInit {
 
     this.loading = true
     this.error = null
-
-    const product: Product = {
-      ...this.form.value,
-      id: this.productId ?? Date.now(), //The id should be the date ??
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    }
+    const now = Date.now()
+    const product: Product = this.isEditMode
+      ? {
+        ...this.existingProduct!,
+          ...this.form.value,
+          updatedAt: now,
+        }
+      : {
+          ...this.form.value,
+          createdAt: now,
+          updatedAt: now,
+        }
 
     const request$ = this.isEditMode
       ? this.productService.updateProduct(product)
