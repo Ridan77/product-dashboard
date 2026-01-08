@@ -46,7 +46,7 @@
     <p class="msg-or-err" *ngIf="loading">Loading products…</p>
 
     <!-- Error -->
-    <p class="msg-or-err" *ngIf="error" class="error">{{ error }}</p>
+    <p class="msg-or-err error" *ngIf="error">{{ error }}</p>
 
     <!-- Empty -->
     <p class="msg-or-err" *ngIf="!loading && !error && products.length === 0">

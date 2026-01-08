@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, map, catchError, throwError } from 'rxjs'
-import { Product } from '../models/product.model'
+import { Product, ProductCreate, ProductUpdate } from '../models/product.model'
+import { environment } from '../../environments/environment'
 
 export interface ProductQuery {
   search?: string
@@ -24,7 +25,7 @@ export interface ApiError {
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private readonly apiUrl = 'http://localhost:3000/products'
+  private readonly apiUrl = `${environment.apiUrl}/products`
 
   constructor(private http: HttpClient) {}
 
@@ -74,13 +75,13 @@ export class ProductService {
       .pipe(catchError((err) => this.mapHttpError(err)))
   }
 
-  createProduct(product: Product): Observable<Product> {
+  createProduct(product: ProductCreate): Observable<Product> {
     return this.http
       .post<Product>(this.apiUrl, product)
       .pipe(catchError((err) => this.mapHttpError(err)))
   }
 
-  updateProduct(product: Product): Observable<Product> {
+  updateProduct(product: ProductUpdate): Observable<Product> {
     return this.http
       .put<Product>(`${this.apiUrl}/${product.id}`, product)
       .pipe(catchError((err) => this.mapHttpError(err)))

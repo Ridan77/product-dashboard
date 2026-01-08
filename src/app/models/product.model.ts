@@ -12,4 +12,6 @@ export interface Product {
 }
 
 
-//Add currecy pipe
+export type ProductCreate = Omit<Product, 'id'>
+export type ProductUpdate = Product
+

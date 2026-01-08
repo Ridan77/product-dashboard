@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { NgIf } from '@angular/common'
 import { ProductService } from '../../services/product.service'
 import { finalize } from 'rxjs'
-import { Product } from '../../models/product.model'
+import { Product, ProductCreate, ProductUpdate } from '../../models/product.model'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
@@ -83,25 +83,28 @@ export class ProductFormComponent implements OnInit {
 
       return
     }
-
+    if (this.isEditMode && !this.existingProduct) {
+      this.error = 'Product not loaded'
+      return
+    }
     this.loading = true
     this.error = null
     const now = Date.now()
-    const product: Product = this.isEditMode
+    const product: ProductCreate | ProductUpdate = this.isEditMode
       ? {
-        ...this.existingProduct!,
-          ...this.form.value,
+          ...this.existingProduct!,
+          ...(this.form.value as Omit<ProductUpdate, 'id' | 'createdAt' | 'updatedAt'>),
           updatedAt: now,
         }
       : {
-          ...this.form.value,
+          ...(this.form.value as Omit<ProductCreate, 'createdAt' | 'updatedAt'>),
           createdAt: now,
           updatedAt: now,
         }
 
     const request$ = this.isEditMode
-      ? this.productService.updateProduct(product)
-      : this.productService.createProduct(product)
+      ? this.productService.updateProduct(product as ProductUpdate)
+      : this.productService.createProduct(product as ProductCreate)
 
     request$.pipe(finalize(() => (this.loading = false))).subscribe({
       next: () => this.router.navigate(['/products']),
