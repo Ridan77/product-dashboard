@@ -84,6 +84,7 @@ src/app/
 
 
 The product model is intentionally realistic but concise:
+```plaintext
 
 export interface Product {
   id: number
@@ -97,7 +98,7 @@ export interface Product {
   createdAt: string
   updatedAt: string
 }
---
+```
 ## API & Data Layer
 
 The application treats data access as an API boundary.
@@ -166,17 +167,17 @@ Node.js (v18+ recommended)
 Angular CLI
 
 Install dependencies
+```bash
 npm install
-
+```
 ### Development Mode (Single Command)
 
 To simplify local development, the project uses the `concurrently` package to run both the Angular app and the mock API at the same time:
 
 ```bash
 npm run dev
-
-
 ```
+
 Open:
 http://localhost:4200
 
