@@ -159,6 +159,18 @@ Empty state when no products match filters
 
 Disabled pagination buttons when unavailable
 
+## Testing
+
+The application includes unit tests covering the core business logic and component behavior.  
+Tests are written using Angular’s TestBed and Jasmine, and focus on:
+
+- **ProductService**: API interaction, query parameter construction, pagination headers, and error handling (server and network errors).
+- **ProductFormComponent**: Reactive form validation and prevention of invalid submissions.
+- **ProductsListComponent**: Initial data loading, filtering behavior, and pagination logic.
+
+Angular Material components are tested using `NoopAnimationsModule` to ensure stable and deterministic test execution.
+
+
 ## Running the Project
 Prerequisites
 
