@@ -75,7 +75,7 @@ src/app/
 │   │       ├── product-form.component.html
 │   │       └── product-form.component.css
 │   └── products.routes.ts
----
+```
 
 
 
