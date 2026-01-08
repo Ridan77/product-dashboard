@@ -48,8 +48,7 @@ export class ProductService {
       params = params.set('_sort', query.sortBy)
       params = params.set('_order', query.order ?? 'asc')
     }
-    console.log(params);
-    
+
     return params
   }
 
