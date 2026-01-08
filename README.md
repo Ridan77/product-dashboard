@@ -1,7 +1,6 @@
 # Product Management Dashboard (Angular)
 
 Frontend take-home assignment – Product Management Dashboard  
-Confidential & Proprietary — Intended solely for evaluation purposes
 
 ---
 
