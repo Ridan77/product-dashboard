@@ -10,11 +10,23 @@ import { NgIf } from '@angular/common'
 import { ProductService } from '../../services/product.service'
 import { finalize } from 'rxjs'
 import { Product } from '../../models/product.model'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatButtonModule } from '@angular/material/button'
+import { MatError } from '@angular/material/form-field'
+
+
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf,  MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css',
 })

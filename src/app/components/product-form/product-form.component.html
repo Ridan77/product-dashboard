@@ -1,64 +1,86 @@
 <h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
 
-<p *ngIf="error" class="error">{{ error }}</p>
+<mat-error *ngIf="error">{{ error }}</mat-error>
+
 <!-- Product image (edit mode only) -->
 <div *ngIf="isEditMode && !loading" class="image-preview">
-    <img class="product-image" [src]="getImageUrl(form.get('name')?.value)" [alt]="form.get('name')?.value" />
+  <img
+    class="product-image"
+    [src]="getImageUrl(form.get('name')?.value)"
+    [alt]="form.get('name')?.value"
+  />
 </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-    <label>
-        Name
-        <input formControlName="name" />
-    </label>
-    <p *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-        Name is required (min 3 chars)
-    </p>
+<form [formGroup]="form" (ngSubmit)="submit()" class="product-form">
 
-    <label>
-        Description
-        <textarea formControlName="description"></textarea>
-    </label>
-    <p *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
-        Description is required
-    </p>
+  <!-- Name -->
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" />
+    <mat-error *ngIf="form.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+    <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+      Minimum 3 characters
+    </mat-error>
+  </mat-form-field>
 
-    <label>
-        Price
-        <input type="number" formControlName="price" />
-    </label>
-    <p *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
-        Price is required
-    </p>
+  <!-- Description -->
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput rows="3" formControlName="description"></textarea>
+    <mat-error *ngIf="form.get('description')?.invalid">
+      Description is required
+    </mat-error>
+  </mat-form-field>
 
-    <label>
-        Currency
-        <select formControlName="currency">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="ILS">ILS</option>
-        </select>
-    </label>
+  <!-- Price -->
+  <mat-form-field appearance="outline">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" formControlName="price" />
+    <mat-error *ngIf="form.get('price')?.invalid">
+      Price is required
+    </mat-error>
+  </mat-form-field>
 
+  <!-- Currency -->
+  <mat-form-field appearance="outline">
+    <mat-label>Currency</mat-label>
+    <mat-select formControlName="currency">
+      <mat-option value="USD">USD</mat-option>
+      <mat-option value="EUR">EUR</mat-option>
+      <mat-option value="ILS">ILS</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <label>
-        Category
-        <input formControlName="category" />
-    </label>
+  <!-- Category -->
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <input matInput formControlName="category" />
+  </mat-form-field>
 
-    <label>
-        Stock
-        <input type="number" formControlName="stock" />
-    </label>
-    <p *ngIf="form.get('stock')?.touched && form.get('stock')?.invalid">
-        Stock is required
-    </p>
-    <label>
-        Active
-        <input type="checkbox" formControlName="isActive" />
-    </label>
+  <!-- Stock -->
+  <mat-form-field appearance="outline">
+    <mat-label>Stock</mat-label>
+    <input matInput type="number" formControlName="stock" />
+    <mat-error *ngIf="form.get('stock')?.invalid">
+      Stock is required
+    </mat-error>
+  </mat-form-field>
 
-    <button type="submit" [disabled]="loading || form.invalid">
-        {{ loading ? 'Saving...' : 'Save' }}
-    </button>
+  <!-- Active -->
+  <mat-checkbox formControlName="isActive">
+    Active
+  </mat-checkbox>
+
+  <!-- Submit -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="loading || form.invalid"
+  >
+    {{ loading ? 'Saving...' : 'Save' }}
+  </button>
+
 </form>
