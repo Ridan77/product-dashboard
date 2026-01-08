@@ -57,6 +57,7 @@ The application includes:
 ---
 
 ## Project Structure
+```plaintext
 
 src/app/
 ├── products/
@@ -75,24 +76,6 @@ src/app/
 │   │       └── product-form.component.css
 │   └── products.routes.ts
 --
-
-src/
-└── app/
-    └── products/
-        ├── models/
-        │   └── product.model.ts
-        ├── services/
-        │   └── product.service.ts
-        ├── pages/
-        │   ├── products-list/
-        │   │   ├── products-list.component.ts
-        │   │   ├── products-list.component.html
-        │   │   └── products-list.component.css
-        │   └── product-form/
-        │       ├── product-form.component.ts
-        │       ├── product-form.component.html
-        │       └── product-form.component.css
-        └── products.routes.ts
 
 
 
