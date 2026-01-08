@@ -10,11 +10,23 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NgIf, NgForOf, ReactiveFormsModule],
+  imports: [
+    NgIf,
+    NgForOf,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+  ],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })
@@ -102,5 +114,9 @@ export class ProductsListComponent implements OnInit {
 
   editProduct(productId: number) {
     this.router.navigate(['/products', productId])
+  }
+
+  createProduct() {
+    this.router.navigate(['/products/new'])
   }
 }

@@ -1,21 +1,35 @@
 <div class="main-container">
 
     <div class="header">
-        <h1>Products</h1>
+        <div class="main-header">
 
-        <!-- Controls -->
-        <div class="toolbar">
-            <input type="text" placeholder="Search products..." [formControl]="searchControl" />
+            <h1>Products List</h1>
 
-            <label>
-                Sort by:
-                <select [value]="query.sortBy" (change)="onSortChange($any($event.target).value)">
-                    <option value="createdAt">Newest</option>
-                    <option value="price">Price</option>
-                    <option value="name">Name</option>
-                </select>
-            </label>
+            <!-- Create -->
+            <button mat-raised-button color="primary" (click)="createProduct()">
+                New Product
+            </button>
+
         </div>
+        <div class="filters">
+
+            <!-- Search -->
+            <mat-form-field appearance="outline" class="search">
+                <mat-label>Search products</mat-label>
+                <input matInput placeholder="Search products..." [formControl]="searchControl" />
+            </mat-form-field>
+
+            <!-- Sort -->
+            <mat-form-field appearance="outline">
+                <mat-label>Sort by</mat-label>
+                <mat-select [value]="query.sortBy" (selectionChange)="onSortChange($event.value)">
+                    <mat-option value="createdAt">Newest</mat-option>
+                    <mat-option value="price">Price</mat-option>
+                    <mat-option value="name">Name</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
     </div>
 
     <!-- Loading -->

@@ -1,3 +1,8 @@
+h1{
+  text-align: center;
+  margin-top: 20px;
+}
+
 .image-preview {
   display: flex;
   justify-self: center;
@@ -6,29 +11,13 @@
 
 form {
   display: grid;
-  grid-template-columns: 1fr;
+  width: 50%;
+  margin: auto;
   gap: 20px;
   background-color: var(--bg-general);
   color: white;
   padding: 20px;
   border-radius: 1em;
-  label {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
 
-    input,
-    textarea,
-    select {
-      border: none;
-      border-radius: 0.6em;
-    }
-  }
-  p {
-    margin: 0;
-    margin-left: 100px;
-  }
-  button {
-    padding: 10px;
-    border-radius: 1em;
-  }
+
 }

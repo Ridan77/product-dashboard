@@ -1,11 +1,6 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 .main-container {
   width: 100%;
+  height: 100%;
   background-color: var(--bg-general);
 }
 
@@ -14,27 +9,44 @@
   position: fixed;
   background-color: var(--bg-fixed);
   z-index: 1000;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
+  /* padding-bottom: 20px; */
   width: 100%;
   color: white;
 }
 .header {
   top: 0;
-  text-align: center;
+
+  .main-header {
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      background-color: inherit;
+    }
+  }
 }
+.filters {
+  margin: auto;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
 .pagination {
   bottom: 0;
-
   text-align: center;
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-.list-content ,.msg-or-err {
-  padding-top: 150px;
-  padding-bottom: 70px;
+.list-content,
+.msg-or-err {
+  background-color: green;
+  padding-top: 170px;
+  padding-bottom: 200px;
   height: 100%;
 }
 
@@ -78,8 +90,9 @@
   margin-top: 0.5rem;
 }
 
-.msg-or-err{
-text-align: center;
-color: white;
-
+.msg-or-err {
+  margin-top: 100px;
+  text-align: center;
+  color: white;
+  font-size: 2em;
 }

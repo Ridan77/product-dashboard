@@ -1,27 +1,191 @@
-# ProductDashboard
+# Product Management Dashboard (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Frontend take-home assignment – Product Management Dashboard  
+Confidential & Proprietary — Intended solely for evaluation purposes
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Overview
 
-## Code scaffolding
+This project is a small Angular application for managing products in an e-commerce catalog.  
+It demonstrates everyday frontend decision-making, Angular best practices, reactive forms, RxJS usage, and clean separation between UI and data access.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The application includes:
+- Product list with search, sorting, and pagination
+- Create and edit product flows
+- Reactive forms with validation
+- Clear loading, error, and empty states
+- A mocked API boundary using `json-server`
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Tech Stack
 
-## Running unit tests
+- **Angular** (standalone components)
+- **TypeScript**
+- **RxJS**
+- **Angular Material**
+- **json-server** (mock backend)
+- **HttpClient**
+- **Jasmine / Karma** (testing)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## Features
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Product List
+- Search with debounce
+- Sorting (name / price / creation date)
+- Pagination with total page calculation
+- Loading, error, and empty states
+- Navigation to edit product
 
-## Further help
+### Product Create / Edit
+- Single reusable reactive form
+- Strongly typed product model
+- Field-level validation with user feedback
+- Create and update flows
+- Disabled submit while invalid or saving
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Architecture
+- Feature-based folder structure
+- Clear API/service boundary
+- Strong typing (no `any` in business logic)
+- Readable RxJS pipelines
+- Standalone Angular components
+
+---
+
+## Project Structure
+
+src/app/
+├── products/
+│   ├── models/
+│   │   └── product.model.ts
+│   ├── services/
+│   │   └── product.service.ts
+│   ├── pages/
+│   │   ├── products-list/
+│   │   │   ├── products-list.component.ts
+│   │   │   ├── products-list.component.html
+│   │   │   └── products-list.component.css
+│   │   └── product-form/
+│   │       ├── product-form.component.ts
+│   │       ├── product-form.component.html
+│   │       └── product-form.component.css
+│   └── products.routes.ts
+--
+
+
+## Product Model
+
+
+
+The product model is intentionally realistic but concise:
+
+export interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+  currency: 'USD' | 'EUR' | 'ILS'
+  category: string
+  stock: number
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+--
+## API & Data Layer
+
+The application treats data access as an API boundary.
+
+Mock Backend
+
+The project uses json-server with a db.json file.
+
+Supported features:
+
+Pagination via _page / _limit
+
+Sorting via _sort / _order
+
+Search via q
+
+Total count via X-Total-Count response header
+
+ProductService
+
+Responsible for all HTTP communication
+
+Maps UI query state to API parameters
+
+Returns typed observables
+
+Keeps components thin and declarative
+
+Routes
+Route	Description
+/products	Products list
+/products/new	Create product
+/products/:id	Edit product
+
+Create and edit routes share the same form component, differentiated by route parameters.
+
+## Forms & Validation
+
+Reactive Forms
+
+Required and minimum-length validations
+
+Numeric validations for price and stock
+
+Disabled submit when invalid
+
+Inline validation messages
+
+Clear saving and error feedback
+
+## State & UX Handling
+
+Loading indicators during API calls
+
+Error banners on failed requests
+
+Empty state when no products match filters
+
+Disabled pagination buttons when unavailable
+
+## Running the Project
+Prerequisites
+
+Node.js (v18+ recommended)
+
+Angular CLI
+
+Install dependencies
+npm install
+
+### Development Mode (Single Command)
+
+To simplify local development, the project uses the `concurrently` package to run both the Angular app and the mock API at the same time:
+
+```bash
+npm run dev
+
+
+```
+Open:
+http://localhost:4200
+
+## Design & Technical Decisions
+
+Standalone components were used 
+
+Reactive Forms were chosen for explicit validation and testability.
+
+RxJS operators are kept readable and minimal (e.g. debounce, distinctUntilChanged).
+
+API boundary is enforced via a single service.
+
+No global state library was introduced to keep scope aligned with assignment size.
