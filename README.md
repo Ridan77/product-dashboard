@@ -127,9 +127,9 @@ Returns typed observables
 Keeps components thin and declarative
 
 # Routes
-```plaintext
 
 Route	Description
+```plaintext
 /products	Products list
 /products/new	Create product
 /products/:id	Edit product
