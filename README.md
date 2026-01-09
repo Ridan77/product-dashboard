@@ -127,12 +127,13 @@ Returns typed observables
 Keeps components thin and declarative
 
 # Routes
+```plaintext
 
 Route	Description
 /products	Products list
 /products/new	Create product
 /products/:id	Edit product
-
+```
 Create and edit routes share the same form component, differentiated by route parameters.
 
 ## Forms & Validation
