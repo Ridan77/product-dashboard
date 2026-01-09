@@ -1,6 +1,13 @@
 .edit-create-container {
-  height: 100vh;
+  height: 90vh;
 }
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
 h1 {
   text-align: center;
   padding-top: 20px;
@@ -8,15 +15,12 @@ h1 {
   margin: 0;
 }
 
-.image-preview {
-  display: flex;
-  justify-self: center;
-  padding: 10px;
-}
+
 
 form {
   display: grid;
-  width: 50%;
+  grid-template-columns: 1fr 1fr;
+  max-width: 500px;
   margin: auto;
   gap: 5px;
   background-color: var(--electric-violet);

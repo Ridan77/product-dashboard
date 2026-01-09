@@ -1,12 +1,13 @@
 <div class="edit-create-container">
+  <div class="header">
 
-  <h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
+    <h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
 
-  <mat-error *ngIf="error">{{ error }}</mat-error>
+    <mat-error *ngIf="error">{{ error }}</mat-error>
 
-  <!-- Product image (edit mode only) -->
-  <div *ngIf="isEditMode && !loading" class="image-preview">
-    <img class="product-image" [src]="getImageUrl(form.get('name')?.value)" [alt]="form.get('name')?.value" />
+    <!-- Product image (edit mode only) -->
+    <img *ngIf="isEditMode && !loading" class="product-image" [src]="getImageUrl(form.get('name')?.value)"
+      [alt]="form.get('name')?.value" />
   </div>
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="product-form">
@@ -72,8 +73,7 @@
     </mat-checkbox>
 
     <!-- Submit -->
-    <button mat-raised-button color="primary" type="submit"
-      [disabled]="loading || form.invalid || (isEditMode && !existingProduct)">
+    <button mat-raised-button type="submit" [disabled]="loading || form.invalid || (isEditMode && !existingProduct)">
       {{ loading ? 'Saving...' : 'Save' }}
     </button>
 
