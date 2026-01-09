@@ -1,23 +1,26 @@
-h1{
+.edit-create-container {
+  height: 100vh;
+}
+h1 {
   text-align: center;
-  margin-top: 20px;
+  padding-top: 20px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .image-preview {
   display: flex;
   justify-self: center;
-  padding: 20px;
+  padding: 10px;
 }
 
 form {
   display: grid;
   width: 50%;
   margin: auto;
-  gap: 20px;
-  background-color: var(--bg-general);
+  gap: 5px;
+  background-color: var(--electric-violet);
   color: white;
   padding: 20px;
   border-radius: 1em;
-
-
 }

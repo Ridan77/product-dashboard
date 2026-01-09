@@ -54,8 +54,8 @@
     </p>
 
     <!-- Cards -->
-    <div class="list-content">
-        <div class="products-grid" *ngIf="!loading && !error && products.length > 0">
+    <div class="list-content" *ngIf="!loading && !error && products.length > 0">
+        <div class="products-grid" >
             <div class="product-card" *ngFor="let product of products">
                 <div class="card-header">
                     <h3>{{ product.name }}</h3>
