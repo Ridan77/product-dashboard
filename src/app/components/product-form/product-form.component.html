@@ -71,10 +71,14 @@
     <mat-checkbox formControlName="isActive">
       Active
     </mat-checkbox>
+    <!-- buttons -->
 
     <!-- Submit -->
     <button mat-raised-button type="submit" [disabled]="loading || form.invalid || (isEditMode && !existingProduct)">
       {{ loading ? 'Saving...' : 'Save' }}
+    </button>
+    <button type="button" class="cancel" (click)="cancel()">
+      X
     </button>
 
   </form>

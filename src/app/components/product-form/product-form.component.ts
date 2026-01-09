@@ -13,7 +13,7 @@ import {
   Product,
   ProductCreate,
   ProductUpdate,
-  ProductFormValues
+  ProductFormValues,
 } from '../../models/product.model'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -98,16 +98,16 @@ export class ProductFormComponent implements OnInit {
     const formValues = this.form.value as ProductFormValues
 
     const product: ProductCreate | ProductUpdate = this.isEditMode
-     ? {
-      ...this.existingProduct!,
-      ...formValues,
-      updatedAt: now,
-    }
-  : {
-      ...formValues,
-      createdAt: now,
-      updatedAt: now,
-    }
+      ? {
+          ...this.existingProduct!,
+          ...formValues,
+          updatedAt: now,
+        }
+      : {
+          ...formValues,
+          createdAt: now,
+          updatedAt: now,
+        }
 
     const request$ = this.isEditMode
       ? this.productService.updateProduct(product as ProductUpdate)
@@ -122,5 +122,8 @@ export class ProductFormComponent implements OnInit {
     return `https://robohash.org/${encodeURIComponent(
       name
     )}?set=set1&size=200x200`
+  }
+  cancel(): void {
+    this.router.navigate(['/products'])
   }
 }

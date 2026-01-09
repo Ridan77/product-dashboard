@@ -34,7 +34,7 @@
       "stock": 30,
       "isActive": true,
       "createdAt": 1705132800000,
-      "updatedAt": 1705132800000
+      "updatedAt": 1767947323875
     },
     {
       "id": 4,
@@ -46,7 +46,7 @@
       "stock": 200,
       "isActive": true,
       "createdAt": 1705219200000,
-      "updatedAt": 1705219200000
+      "updatedAt": 1767947285209
     },
     {
       "id": 5,
@@ -82,7 +82,7 @@
       "stock": 60,
       "isActive": true,
       "createdAt": 1705478400000,
-      "updatedAt": 1705478400000
+      "updatedAt": 1767946932627
     },
     {
       "id": 8,
@@ -179,30 +179,6 @@
       "isActive": false,
       "createdAt": 1706169600000,
       "updatedAt": 1706169600000
-    },
-    {
-      "name": "Test Product",
-      "description": "Test test",
-      "price": 100,
-      "currency": "USD",
-      "category": "Video",
-      "stock": 2,
-      "isActive": true,
-      "createdAt": 1767880033401,
-      "updatedAt": 1767880288299,
-      "id": 16
-    },
-    {
-      "name": "a222",
-      "description": "a",
-      "price": 1,
-      "currency": "USD",
-      "category": "",
-      "stock": 2,
-      "isActive": true,
-      "createdAt": 1767881337528,
-      "updatedAt": 1767881337528,
-      "id": 17
     }
   ]
 }

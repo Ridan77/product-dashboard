@@ -1,7 +1,7 @@
 .edit-create-container {
   height: 90vh;
 }
-.header{
+.header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,10 +15,9 @@ h1 {
   margin: 0;
 }
 
-
-
 form {
   display: grid;
+  position: relative;
   grid-template-columns: 1fr 1fr;
   max-width: 500px;
   margin: auto;
@@ -27,4 +26,15 @@ form {
   color: white;
   padding: 20px;
   border-radius: 1em;
+}
+
+.cancel {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border-radius: 1em;
+  border: none;
+}
+.cancel:hover {
+  cursor: pointer;
 }
